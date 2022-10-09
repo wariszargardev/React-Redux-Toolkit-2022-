@@ -1,6 +1,6 @@
 const redux = require('redux')
 const createStore = redux.createStore;
-
+const produce = require('immer').produce
 // 1. Define Action
 const UPDATE_CITY_NAME = 'UPDATE_CITY_NAME';
 
@@ -27,13 +27,17 @@ const initialState = {
 const updateCityNameReducer = (state= initialState, action) =>{
     switch (action.type) {
         case UPDATE_CITY_NAME:
-            return{
-                ...state,
-                address: {
-                    ...state.address,
-                    city: action.payload
-                }
-            }
+            // return{
+                // ...state,
+                // address: {
+                //     ...state.address,
+                //     city: action.payload
+                // }
+            // }
+
+            return produce(state, (draft)=>{
+                draft.address.city= action.payload
+            })
         default:
             return state;
     }
